@@ -99,6 +99,7 @@ export const getEntry = (name) => async (dispatch) => {
 
         // console.log(`seached for name: ${name} and got res: ${data} back`)
         dispatch(loadEntry(data));
+        console.log('DATA', data)
         return data;
     }
 }

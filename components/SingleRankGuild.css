@@ -1,0 +1,337 @@
+.single-rank-wrapper--guilds {
+    margin: 0 auto;
+    margin-bottom: 80px;
+    margin-top: 50px;
+    border: 1px solid #002138;
+    border-radius: 20px;
+    width: 45%;
+}
+
+.single-rank-wrapper--guilds > h2 {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.single-rank-main-content--guilds {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #001829;
+    display: grid;
+    grid-template-columns: 20% 42% 38%;
+    padding-bottom: 20px;
+    padding-top: 30px;
+}
+
+.name-and-head--guilds {
+    justify-self: center;
+    /* margin-left: 25px; */
+    /* align-self: center; */
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.name-and-head--guilds h3 {
+    color: white;
+    /* margin-left: 10px; */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.head-icon-wrapper--guilds > div {
+    height: 100px;
+    width: 100px;
+    background-image: url('https://minotar.net/cube/Kajtoszek/100.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.head-icon-wrapper--guilds {
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid yellow;
+    border-radius: 15px;
+    padding: 7px 7px 0px 7px;
+    margin: 0 auto;
+}
+
+.basic-info--guilds {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-top: 25px;
+    border-right: 2px solid #002138;
+    border-left: 2px solid #002138;
+    padding-left: 30px;
+    margin-left: 20px;
+}
+
+.basic-info--guilds > div ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 5px;
+    margin-right: 20px;
+    align-self: center;
+}
+
+.basic-info--guilds > div {
+    display: flex;
+    margin-top: 10px;
+}
+
+.basic-info--guilds li {
+    width: 35px;
+    height: 35px;
+    background-color: red;
+    /* background-image: url('https://minotar.net/helm/xDepcio/35.png'); */
+    margin: 4px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.masters .hover-info {
+    bottom: 38px;
+}
+
+.leader .hover-info {
+    bottom: 38px;
+}
+
+.basic-info--guilds h4 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.basic-info--guilds span {
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.main-leaders {
+    text-align: center;
+    margin-right: 20px;
+    font-weight: 500;
+    /* font-size: 16px; */
+}
+
+.guild-hearts {
+    color: red;
+    margin: 0 2px;
+}
+
+.main-stats--guilds {
+    padding-left: 30px;
+    padding-right: 30px;
+    align-self: center;
+    /* border-right: 2px solid #002138; */
+}
+
+.main-stats--guilds p {
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.main-stats--guilds li {
+    margin: 10px 0;
+    color: white;
+    font-weight: 400;
+}
+
+.main-stats--guilds span {
+    color: rgb(23, 140, 250);
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.last-stats-page-wrapper--guilds {
+    background-color: #001829;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.last-stats-page--guilds {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    color: white;
+    justify-content: space-evenly;
+    border-top: 2px solid #002138;
+    padding-top: 15px;
+}
+
+.last-stats-page--guilds h4 {
+    font-weight: 500;
+    text-align: center;
+}
+
+.remaining-players-holder {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.remaining-players-holder div {
+    /* background-color: yellow; */
+    width: 35px;
+    height: 35px;
+    margin: 2px;
+}
+
+.last-kills-holder--guilds {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.last-kills-holder--guilds > div {
+    width: 35px;
+    height: 35px;
+    margin: 2px;
+    background-color: red;
+}
+
+.last-deaths-holder--guilds {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.last-deaths-holder--guilds > div {
+    width: 35px;
+    height: 35px;
+    margin: 2px;
+    background-color: green;
+}
+
+.guild-no-rank {
+    color: rgb(185, 185, 185);
+}
+
+.player-head-in-guild-rank {
+    cursor: pointer;
+    position: relative;
+}
+
+.hover-info {
+    position: absolute;
+    bottom: 75px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hover-info div {
+    background-color: #002842;
+    width: 200px;
+    height: fit-content;
+    border-radius: 7px;
+    border: 1px solid #003153;
+    padding: 5px 10px;
+}
+
+.hover-info-nick {
+    display: flex;
+    margin-bottom: 5px;
+    color: rgb(185, 185, 185);
+}
+
+.hover-info-nick span {
+    margin-left: 5px;
+    color: rgb(23, 140, 250);
+}
+
+.hover-info-points {
+    display: flex;
+    color: rgb(185, 185, 185);
+}
+
+.hover-info-points span {
+    margin-left: 5px;
+    color: rgb(23, 140, 250);
+}
+
+.hover-nav-info {
+    color: rgb(185, 185, 185);
+    font-size: 11px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.width-setter-hover {
+    padding: 0px 95px;
+}
+
+/* last kills and deaths hover */
+.hover-info--player {
+    width: fit-content;
+    background-color: #002842;
+    height: fit-content;
+    min-width: 150px;
+    border-radius: 7px;
+    border: 1px solid #003153;
+    padding: 5px 10px;
+    flex-direction: column;
+
+    position: absolute;
+    bottom: 39px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hover-info-nick--player-stats {
+    display: flex;
+    color: rgb(185, 185, 185);
+    align-items: center;
+    margin-bottom: 10px;
+    padding-top: 5px;
+}
+
+.hover-info-nick--player-stats span:first-child {
+    margin-left: 5px;
+    color: rgb(23, 140, 250);
+}
+
+.hover-info-points--player-stats {
+    margin-left: 5px;
+    color: rgb(46, 202, 15);
+    /* font-size: 18px; */
+}
+
+.hover-nav-info--player-stats {
+    color: rgb(185, 185, 185);
+    font-size: 11px;
+    text-align: center;
+}
+
+.width-setter-hover--player-stats {
+    padding: 0px 95px;
+}
+
+.hover-info-date {
+    color: rgb(185, 185, 185);
+    white-space: nowrap;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.hover-info-points--player-stats.hover-info-points--player-stats--death {
+    color: rgb(238, 36, 0);
+}

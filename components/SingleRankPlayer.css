@@ -1,0 +1,255 @@
+.single-rank-wrapper {
+    margin: 0 auto;
+    margin-bottom: 80px;
+    margin-top: 50px;
+    border: 1px solid #002138;
+    border-radius: 20px;
+    width: 45%;
+}
+
+.single-rank-wrapper > h2 {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.single-rank-main-content {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #001829;
+    display: grid;
+    grid-template-columns: 18% 14% 34% 34%;
+    padding-bottom: 20px;
+    padding-top: 30px;
+}
+
+.name-and-head {
+    justify-self: center;
+    margin-left: 5px;
+    /* align-self: center; */
+}
+
+.name-and-head h3 {
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    color: white;
+    /* margin-left: 20px; */
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.head-icon-wrapper > div {
+    height: 100px;
+    width: 100px;
+    /* background-image: url('https://minotar.net/cube/xDepcio/100.png'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.head-icon-wrapper {
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid yellow;
+    border-radius: 15px;
+    padding: 7px 7px 0px 7px;
+}
+
+.basic-info {
+    color: white;
+    align-self: center;
+    margin-left: 5px;
+    /* padding-right: 30px; */
+    padding: 46px 0;
+    border-right: 2px solid #002138;
+}
+
+.basic-info h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.basic-info span {
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.main-stats {
+    padding-left: 30px;
+    padding-right: 30px;
+    align-self: center;
+    border-right: 2px solid #002138;
+}
+
+.main-stats p {
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.main-stats li {
+    margin: 10px 0;
+    color: white;
+    font-weight: 400;
+}
+
+.main-stats span {
+    color: rgb(23, 140, 250);
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.additional-stats {
+    padding-left: 30px;
+    align-self: center;
+    padding-right: 30px;
+}
+
+.additional-stats p {
+    color: white;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.additional-stats li {
+    margin: 10px 0;
+    color: white;
+    font-weight: 400;
+}
+
+.additional-stats span {
+    color: rgb(23, 140, 250);
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.last-stats-page-wrapper {
+    background-color: #001829;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 242px;
+}
+
+.last-stats-page {
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: white;
+    justify-content: space-evenly;
+    border-top: 2px solid #002138;
+    padding-top: 15px;
+}
+
+.last-stats-page h4 {
+    font-weight: 500;
+    text-align: center;
+}
+
+.last-kills-holder {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.last-kills-holder > div {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    background-color: red;
+}
+
+.last-deaths-holder {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.last-deaths-holder > div {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    background-color: green;
+}
+
+.guild-tag-in-player {
+    cursor: pointer;
+}
+
+.guild-tag-in-player:hover {
+    text-decoration: underline;
+}
+
+/* Latest Kills and deaths info hover */
+/* .hover-info {
+    position: absolute;
+    bottom: 75px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+} */
+
+.hover-info--player {
+    width: fit-content;
+    background-color: #002842;
+    height: fit-content;
+    min-width: 150px;
+    border-radius: 7px;
+    border: 1px solid #003153;
+    padding: 5px 10px;
+    flex-direction: column;
+
+    position: absolute;
+    bottom: 45px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hover-info-nick--player-stats {
+    display: flex;
+    color: rgb(185, 185, 185);
+    align-items: center;
+    margin-bottom: 10px;
+    padding-top: 5px;
+}
+
+.hover-info-nick--player-stats span:first-child {
+    margin-left: 5px;
+    color: rgb(23, 140, 250);
+}
+
+.hover-info-points--player-stats {
+    margin-left: 5px;
+    color: rgb(46, 202, 15);
+    /* font-size: 18px; */
+}
+
+.hover-nav-info--player-stats {
+    color: rgb(185, 185, 185);
+    font-size: 11px;
+    text-align: center;
+}
+
+.width-setter-hover--player-stats {
+    padding: 0px 95px;
+}
+
+.hover-info-date {
+    color: rgb(185, 185, 185);
+    white-space: nowrap;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.hover-info-points--player-stats.hover-info-points--player-stats--death {
+    color: rgb(238, 36, 0);
+}

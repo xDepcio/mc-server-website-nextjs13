@@ -79,7 +79,6 @@ const eventsData = [
 function MainPage() {
 
     const dispatch = useDispatch()
-    // @ts-ignore
     const leaderboardList = useSelector((state) => state.leaderboard);
 
     const [data, setData] = useState(leaderboardList.players ? leaderboardList.players.slice(0, 10) : undefined)
@@ -87,31 +86,25 @@ function MainPage() {
     const [cardOffset, setCardOffset] = useState('37%')
     const [selectedEvent, setSelectedEvent] = useState(1)
 
-    // @ts-ignore
-    useEffect(async () => {
-        setTimeout(() => {
-            setAdditionalClass('')
-        }, 1000)
+    useEffect(() => {
 
-        if (leaderboardList.players.length === 0) {
-            const res = await dispatch(get20More(1))
-            const re2 = await dispatch(get20More(2))
-            const re3 = await dispatch(get20More(3))
-            // console.log('res', res)
+        async function handlePageStart() {
+            setTimeout(() => {
+                setAdditionalClass('')
+            }, 1000)
+
+            if (leaderboardList.players.length === 0) {
+                const res = await dispatch(get20More(1))
+                const re2 = await dispatch(get20More(2))
+                const re3 = await dispatch(get20More(3))
+            }
         }
-        // const res = await fetch('http://localhost:8000/api/leaderboards/top')
-        // console.log('res', await res.json())
 
     }, [])
 
     useEffect(() => {
         setData(leaderboardList.players ? leaderboardList.players.slice(0, 10) : undefined)
-        // console.log('datacahgned:', data)
     }, [leaderboardList])
-
-    // console.log('offset', cardOffset)
-    // console.log('leaderboardList', leaderboardList)
-    // console.log('data:::', data)
 
     return (
         <>
@@ -140,9 +133,7 @@ function MainPage() {
                 </div>
                 <div className="ranking-actual-table">
                     <h2 className='what-board-header'>Top 10 {data === leaderboardList.players ? 'Graczy' : 'Gildi'}</h2>
-                    {/* @ts-ignore */}
                     {data && (data.map((ele, i) => {
-                        // console.log('eloelo')
                         return (
                             <div className='single-row-in-table' key={i}>
                                 <div style={{ fontSize: i === 9 ? 35 : '' }} className='in-table-rank'>{i + 1}</div>

@@ -3,11 +3,22 @@
 import Navigation from '@/components/Navigation'
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 import { Provider } from 'react-redux'
 import configureStore from '@/redux'
+import Footer from '@/components/Footer'
+import '@/components/MainPage.css'
+import '@/components/ErrorPage.css'
+import '@/components/LeaderboardsPage.css'
+import '@/components/Navigation.css'
+import '@/components/PaySuccess.css'
+import '@/components/ShopPage.css'
+import '@/components/SingleRankGuild.css'
+import '@/components/SingleRankPlayer.css'
+import '@/components/Terms.css'
+import '@/components/shop-components/KitPreview.css'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata: Metadata = {
 //     title: 'Create Next App',
@@ -24,10 +35,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            {/* <body className={inter.className}> */}
+            <body>
                 <Provider store={store}>
                     <Navigation />
                     {children}
+                    <Footer />
                 </Provider>
             </body>
         </html>
