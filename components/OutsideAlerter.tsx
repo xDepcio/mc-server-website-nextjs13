@@ -1,8 +1,8 @@
 'use client'
 
+import { changeShowStatus } from "@/redux/shop";
 import React, { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { changeShowStatus } from "../store/shop";
 
 function useOutsideAlerter(ref, clickedEleClass) {
 
