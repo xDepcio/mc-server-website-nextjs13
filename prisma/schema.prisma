@@ -1,11 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model Deaths {
+  id                               Int      @id @default(autoincrement())
+  deaderId                         Int
+  killerId                         Int
+  pointsLost                       Int?
+  createdAt                        DateTime @default(now())
+  updatedAt                        DateTime @default(now())
+  Players_Deaths_killerIdToPlayers Players  @relation("Deaths_killerIdToPlayers", fields: [killerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Players_Deaths_deaderIdToPlayers Players  @relation("Deaths_deaderIdToPlayers", fields: [deaderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Guilds {
+  id        Int       @id @default(autoincrement())
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  Players   Players[]
+}
+
+model Kills {
+  id                              Int      @id @default(autoincrement())
+  killerId                        Int
+  deaderId                        Int
+  pointsGained                    Int?
+  createdAt                       DateTime @default(now())
+  updatedAt                       DateTime @default(now())
+  Players_Kills_deaderIdToPlayers Players  @relation("Kills_deaderIdToPlayers", fields: [deaderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Players_Kills_killerIdToPlayers Players  @relation("Kills_killerIdToPlayers", fields: [killerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Players {
+  id                              Int      @id @default(autoincrement())
+  nickname                        String
+  points                          Int?     @default(1000)
+  guildId                         Int?
+  rank                            String   @default("gracz")
+  guildRank                       String?
+  // createdAt                       DateTime @default(now())
+  // updatedAt                       DateTime @default(now())
+  Deaths_Deaths_killerIdToPlayers Deaths[] @relation("Deaths_killerIdToPlayers")
+  Deaths_Deaths_deaderIdToPlayers Deaths[] @relation("Deaths_deaderIdToPlayers")
+  Kills_Kills_deaderIdToPlayers   Kills[]  @relation("Kills_deaderIdToPlayers")
+  Kills_Kills_killerIdToPlayers   Kills[]  @relation("Kills_killerIdToPlayers")
+  Guilds                          Guilds?  @relation(fields: [guildId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model SequelizeData {
+  name String @id
+}
+
+model SequelizeMeta {
+  name String @id
 }
