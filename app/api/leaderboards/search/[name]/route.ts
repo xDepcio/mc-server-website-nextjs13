@@ -56,6 +56,15 @@ export async function GET(req: Request, { params }: { params: { name: string } }
         }
     })
 
+    const guildPlace = await db.$queryRawUnsafe(`SELECT COUNT(*) as guildPlace FROM (
+        SELECT *, AVG(points) as avgPoints FROM Guilds
+            JOIN (Players) ON (Players.guildId = Guilds.id)
+            GROUP BY guildId
+            HAVING avgPoints >= ${Math.floor(guildAvg._avg.points!)}
+            ORDER BY avgPoints DESC
+        );`
+    ) as any
+
     const guildLeaders = guild.Players.filter(p => p.guildRank === "leader")
     const guildVleader = guild.Players.filter(p => p.guildRank === "vleader")
     const guildMasters = guild.Players.filter(p => p.guildRank === "master")
@@ -64,6 +73,7 @@ export async function GET(req: Request, { params }: { params: { name: string } }
     return NextResponse.json({
         ...guild,
         guildAvg: guildAvg._avg.points,
+        guildPlace: Number(guildPlace[0].guildPlace),
         isPlayer: false,
         Players: guildPlayers,
         Leaders: guildLeaders,
