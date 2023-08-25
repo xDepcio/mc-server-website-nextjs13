@@ -1,52 +1,75 @@
-export const GET = async () => {
-    console.log('qeury params:', res.locals.query)
+import db from "@/lib/utils/prisma"
+import { NextResponse } from "next/server"
 
-    const players = await Player.findAll({
-        order: [
-            ['points', 'DESC']
-        ],
-        limit: res.locals.query.limit,
-        offset: res.locals.query.offset,
-        attributes: {
-            exclude: [
-                'createdAt',
-                'updatedAt',
-                'guildId',
-                'guildRank'
-            ]
+export const GET = async (req: Request) => {
+    const { searchParams } = new URL(req.url)
+    const limit = Number(searchParams.get("limit")) || 10
+    const offset = Number(searchParams.get("offset")) || 0
+
+    const players = await db.players.findMany({
+        orderBy: {
+            points: "desc"
+        },
+        take: limit,
+        skip: offset,
+    })
+
+    const playerCount = await db.players.count()
+
+    const guildsGroup = await db.players.groupBy({
+        by: ["guildId"],
+        _avg: {
+            points: true
+        },
+        orderBy: {
+            _avg: {
+                points: "desc"
+            }
+        },
+        where: {
+            guildId: {
+                not: null
+            }
+        },
+        take: limit,
+        skip: offset,
+    })
+
+    const guildsIds = guildsGroup.map(g => g.guildId!)
+
+    const guilds = await db.guilds.findMany({
+        include: {
+            Players: {
+                where: {
+                    guildRank: {
+                        equals: "leader"
+                    }
+                }
+            }
+        },
+        where: {
+            id: {
+                in: guildsIds
+            }
         }
     })
 
-    const guilds = await Player.findAll({
-        where: {
-            guildId: {
-                [Op.ne]: null
+    const guildsFinal = guildsGroup.map(g => {
+        const guild = guilds.find(gg => gg.id === g.guildId)
+
+        return {
+            ...guild?.Players[0],
+            avgPoints: g._avg.points,
+            Guild: {
+                ...guild
             }
-        },
-        include: [
-            {
-                model: Guild,
-                // attributes: [
-                // 'id',
-                // 'name'
-                // ]
-            }
-        ],
-        attributes: {
-            include: [
-                [sequelize.fn('AVG', sequelize.col('points')), 'avgPoints'],
-            ]
-        },
-        group: 'guildId',
-        order: [[sequelize.fn('AVG', sequelize.col('points')), 'DESC']],
-        limit: res.locals.query.limit,
-        offset: res.locals.query.offset
+        }
     })
 
-    res.json({
-        totalPlayers: await Player.count(),
-        totalGuilds: await Guild.count(),
-        players: players,
-        guilds: guilds
+    return NextResponse.json({
+        totalPlayers: await db.players.count(),
+        totalGuilds: await db.guilds.count(),
+        players,
+        guilds: guildsFinal
     })
 }
