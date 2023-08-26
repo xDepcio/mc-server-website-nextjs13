@@ -1,3 +1,4 @@
+import { cloudDb } from "@/lib/utils"
 import db from "@/lib/utils/prisma"
 import { NextResponse } from "next/server"
 
@@ -13,6 +14,9 @@ export const GET = async (req: Request) => {
         take: limit,
         skip: offset,
     })
+    const playersC = await cloudDb.query("SELECT `id`, `nickname`, `points`, `guildId`, `rank`, `guildRank`, `createdAt`, `updatedAt` FROM `Players` AS `Player` ORDER BY `Player`.`points` DESC LIMIT " + `${limit}` + ";")
+    const playersCFormatted = cloudDb.formatResponse(playersC)
+    console.log(playersCFormatted)
 
     const playerCount = await db.players.count()
 
@@ -66,8 +70,27 @@ export const GET = async (req: Request) => {
         }
     })
 
+    const query2 = "SELECT `Player`.`id`, `Player`.`nickname`, `Player`.`points`, `Player`.`guildId`, `Player`.`rank`, `Player`.`guildRank`, `Player`.`createdAt`, `Player`.`updatedAt`, AVG(`points`) AS `avgPoints`, `Guild`.`id` AS `Guild.id`, `Guild`.`name` AS `Guild.name`, `Guild`.`createdAt` AS `Guild.createdAt`, `Guild`.`updatedAt` AS `Guild.updatedAt` FROM `Players` AS `Player` LEFT OUTER JOIN `Guilds` AS `Guild` ON `Player`.`guildId` = `Guild`.`id` GROUP BY `guildId` ORDER BY AVG(`points`) DESC LIMIT 10;"
+    const guildC = await cloudDb.query(query2)
+    const guildCFormatted1 = cloudDb.formatResponse(guildC)
+    const guildCFormatted2 = guildCFormatted1.map((g: any) => {
+        return {
+            ...g,
+            avgPoints: Number(g.avgPoints),
+            Guild: {
+                id: g["Guild.id"],
+                name: g["Guild.name"],
+                createdAt: g["Guild.createdAt"],
+                updatedAt: g["Guild.updatedAt"]
+            }
+        }
+    })
+    console.log(guildC)
+
     return NextResponse.json({
-        players,
-        guilds: guildsFinal
+        // players,
+        players: playersCFormatted,
+        // guilds: guildsFinal
+        guilds: guildCFormatted2
     })
 }
