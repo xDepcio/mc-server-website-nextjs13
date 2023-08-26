@@ -92,5 +92,11 @@ export const GET = async (req: Request) => {
         players: playersCFormatted,
         // guilds: guildsFinal
         guilds: guildCFormatted2
+    }, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
     })
 }

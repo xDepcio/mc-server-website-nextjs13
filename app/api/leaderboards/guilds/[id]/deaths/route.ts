@@ -32,5 +32,11 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
         }
     })
 
-    return NextResponse.json(formattedData)
+    return NextResponse.json(formattedData, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+    })
 }

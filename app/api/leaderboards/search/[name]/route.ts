@@ -20,6 +20,12 @@ export async function GET(req: Request, { params }: { params: { name: string } }
                 id: player["Guild.id"],
                 name: player["Guild.name"]
             }
+        }, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
         })
     }
 
@@ -29,6 +35,12 @@ export async function GET(req: Request, { params }: { params: { name: string } }
         return NextResponse.json({
             error: 'not-found',
             message: 'Gracz lub Gildia z taką nazwą nie istnieje'
+        }, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
         })
     }
     const guildC1 = cloudDb.formatResponse(guildCR1)
@@ -59,6 +71,12 @@ export async function GET(req: Request, { params }: { params: { name: string } }
         Leaders: guildLeaders,
         vLeaders: guildVleader,
         Masters: guildMasters
+    }, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
     })
 
     // const player = await db.players.findFirst({

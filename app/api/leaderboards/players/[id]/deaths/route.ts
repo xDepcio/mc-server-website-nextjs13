@@ -17,7 +17,13 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
         }
     }))
 
-    return NextResponse.json(formattedDeaths)
+    return NextResponse.json(formattedDeaths, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+    })
 
     // const stats = await db.deaths.findMany({
     //     where: {
