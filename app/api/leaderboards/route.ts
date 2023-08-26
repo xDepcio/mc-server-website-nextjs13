@@ -11,7 +11,7 @@ export const GET = async (req: Request) => {
 
     offset = (page - 1) * limit
 
-
+    console.log(1)
     // const players = await db.players.findMany({
     //     orderBy: {
     //         points: "desc"
@@ -22,6 +22,7 @@ export const GET = async (req: Request) => {
     const playersC = cloudDb.formatResponse(await cloudDb.query("SELECT `main`.`Players`.`id`, `main`.`Players`.`nickname`, `main`.`Players`.`points`, `main`.`Players`.`guildId`, `main`.`Players`.`rank`, `main`.`Players`.`guildRank` FROM `main`.`Players` WHERE 1=1 ORDER BY `main`.`Players`.`points` DESC LIMIT " + `${limit}` + " OFFSET " + `${offset}` + ""))
     console.log(playersC)
 
+    console.log(2)
     // const guildsGroup = await db.players.groupBy({
     //     by: ["guildId"],
     //     _avg: {
@@ -40,20 +41,53 @@ export const GET = async (req: Request) => {
     //     take: limit,
     //     skip: offset,
     // })
-    const guildsGroupC = cloudDb.formatResponse(
-        await cloudDb.query("SELECT AVG(`main`.`Players`.`points`), `main`.`Players`.`guildId` FROM `main`.`Players` WHERE `main`.`Players`.`guildId` IS NOT NULL GROUP BY `main`.`Players`.`guildId` ORDER BY AVG(`main`.`Players`.`points`) DESC LIMIT " + `${limit}` + " OFFSET " + `${offset}` + ""),
-        {
-            fieldName: "AVG(`main`.`Players`.`points`)",
-            newFieldName: "_avg",
-            replaceWith: (entry) => ({
-                points: Number(entry.Value)
-            })
-        }
-    )
-    console.log(guildsGroupC)
+    let formattedGuildsC: any = []
+    const gt = await cloudDb.query("SELECT AVG(`main`.`Players`.`points`), `main`.`Players`.`guildId` FROM `main`.`Players` WHERE `main`.`Players`.`guildId` IS NOT NULL GROUP BY `main`.`Players`.`guildId` ORDER BY AVG(`main`.`Players`.`points`) DESC LIMIT " + `${limit}` + " OFFSET " + `${offset}` + "")
+    if (gt) {
+        const guildsGroupC = cloudDb.formatResponse(
+            gt,
+            {
+                fieldName: "AVG(`main`.`Players`.`points`)",
+                newFieldName: "_avg",
+                replaceWith: (entry) => ({
+                    points: Number(entry.Value)
+                })
+            }
+        )
+        console.log(guildsGroupC)
+        console.log(3)
+        const guildsIds = guildsGroupC.map((g: any) => g.guildId!)
+        console.log(4)
+        const query1 = "SELECT `main`.`Guilds`.`id`, `main`.`Guilds`.`name`, `main`.`Guilds`.`createdAt`, `main`.`Guilds`.`updatedAt` FROM `main`.`Guilds` WHERE `main`.`Guilds`.`id` IN (" + `${guildsIds.join(',')}` + ") LIMIT -1 OFFSET 0"
+        const guildsC1 = cloudDb.formatResponse(
+            await cloudDb.query(query1)
+        )
+
+        const query2 = "SELECT `main`.`Players`.`id`, `main`.`Players`.`nickname`, `main`.`Players`.`points`, `main`.`Players`.`guildId`, `main`.`Players`.`rank`, `main`.`Players`.`guildRank` FROM `main`.`Players` WHERE (`main`.`Players`.`guildRank` = " + `"leader"` + " AND `main`.`Players`.`guildId` IN (" + `${guildsIds.join(',')}` + ")) LIMIT " + `${-1}` + " OFFSET " + `${0}` + ""
+        const guildsC2 = cloudDb.formatResponse(
+            await cloudDb.query(query2)
+        )
+        // console.log(guildsC1)
+        // console.log(guildsC2)
+        // console.log(inspect(guilds, {
+        //     depth: null
+        // }))
+
+        formattedGuildsC = guildsC1.map((g: any) => {
+            const player = guildsC2.find((gg: any) => gg.guildId === g.id)
+            // console.log(g)
+            return {
+                ...player,
+                avgPoints: guildsGroupC.find((gd: any) => gd.guildId === g.id)._avg.points,
+                Guild: {
+                    ...g
+                }
+            }
+        }).sort((a: any, b: any) => b.avgPoints - a.avgPoints)
+        console.log(formattedGuildsC)
+    }
 
     // const guildsIds = guildsGroup.map(g => g.guildId!)
-    const guildsIds = guildsGroupC.map((g: any) => g.guildId!)
 
     // const guilds = await db.guilds.findMany({
     //     include: {
@@ -71,33 +105,6 @@ export const GET = async (req: Request) => {
     //         }
     //     }
     // })
-    const query1 = "SELECT `main`.`Guilds`.`id`, `main`.`Guilds`.`name`, `main`.`Guilds`.`createdAt`, `main`.`Guilds`.`updatedAt` FROM `main`.`Guilds` WHERE `main`.`Guilds`.`id` IN (" + `${guildsIds.join(',')}` + ") LIMIT -1 OFFSET 0"
-    const guildsC1 = cloudDb.formatResponse(
-        await cloudDb.query(query1)
-    )
-
-    const query2 = "SELECT `main`.`Players`.`id`, `main`.`Players`.`nickname`, `main`.`Players`.`points`, `main`.`Players`.`guildId`, `main`.`Players`.`rank`, `main`.`Players`.`guildRank` FROM `main`.`Players` WHERE (`main`.`Players`.`guildRank` = " + `"leader"` + " AND `main`.`Players`.`guildId` IN (" + `${guildsIds.join(',')}` + ")) LIMIT " + `${-1}` + " OFFSET " + `${0}` + ""
-    const guildsC2 = cloudDb.formatResponse(
-        await cloudDb.query(query2)
-    )
-    // console.log(guildsC1)
-    // console.log(guildsC2)
-    // console.log(inspect(guilds, {
-    //     depth: null
-    // }))
-
-    const formattedGuildsC = guildsC1.map((g: any) => {
-        const player = guildsC2.find((gg: any) => gg.guildId === g.id)
-        // console.log(g)
-        return {
-            ...player,
-            avgPoints: guildsGroupC.find((gd: any) => gd.guildId === g.id)._avg.points,
-            Guild: {
-                ...g
-            }
-        }
-    }).sort((a: any, b: any) => b.avgPoints - a.avgPoints)
-    console.log(formattedGuildsC)
     // console.log(inspect(formattedGuildsC, { depth: null }), 'dasdsa')
 
     // const guildsFinal = guildsGroup.map(g => {
@@ -126,7 +133,7 @@ export const GET = async (req: Request) => {
         // players,
         players: playersC,
         // guilds: guildsFinal
-        guilds: formattedGuildsC
+        guilds: formattedGuildsC || []
     }, {
         headers: {
             'Access-Control-Allow-Origin': '*',
