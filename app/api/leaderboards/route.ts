@@ -5,8 +5,12 @@ import { inspect } from 'util'
 
 export const GET = async (req: Request) => {
     const { searchParams } = new URL(req.url)
-    const limit = Number(searchParams.get("limit")) || 10
-    const offset = Number(searchParams.get("offset")) || 0
+    let limit = Number(searchParams.get("limit")) || 10
+    let offset = Number(searchParams.get("offset")) || 0
+    let page = Number(searchParams.get("page")) || 1
+
+    offset = (page - 1) * limit
+
 
     // const players = await db.players.findMany({
     //     orderBy: {
